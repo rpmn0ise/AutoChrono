@@ -4,8 +4,6 @@
 
 Chronomètre automatique pour BeamNG.drive : démarre tout seul dès que ton véhicule bouge, avec en plus une ligne de chronométrage virtuelle à placer où tu veux pour chronométrer un tour de circuit.
 
-![Ligne de chronométrage placée sur circuit](docs/image-2-gate-on-track.png)
-
 ## Fonctionnalités
 
 - **Démarrage automatique** dès que la vitesse des roues dépasse 0.5 m/s.
