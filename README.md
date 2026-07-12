@@ -4,8 +4,6 @@
 
 An automatic stopwatch for BeamNG.drive: starts on its own the moment your vehicle moves, plus a virtual timing gate you can drop anywhere to time a lap.
 
-![Timing gate placed on track](docs/image-2-gate-on-track.png)
-
 ## Features
 
 - **Auto-start** once wheel speed goes above 0.5 m/s.
