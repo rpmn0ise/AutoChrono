@@ -1,0 +1,17 @@
+{
+  "name": "AutoChrono",
+  "author": "rpmn0ise",
+  "version": "1.0",
+  "description": "Chronometre automatique piloté par la vitesse du vehicule (demarrage/pause auto), avec distance cumulee.",
+  "directive": "autoChrono",
+  "domElement": "<auto-chrono></auto-chrono>",
+  "css": {
+    "min-width": "220px",
+    "height": "160px",
+    "width": "220px",
+    "right": "0px",
+    "min-height": "160px",
+    "top": "0px"
+  },
+  "preserveAspectRatio": false
+}

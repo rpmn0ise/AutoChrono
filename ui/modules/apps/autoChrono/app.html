@@ -1,0 +1,36 @@
+<div class="bngApp" style="width: 100%; height: 100%;" layout="column" layout-align="center center">
+  <link type="text/css" rel="stylesheet" href="/ui/modules/apps/autoChrono/app.css" />
+
+  <!-- Indicateur visuel : mode auto actif + etat du chrono + ligne placee -->
+  <div class="status-indicator" layout="row" layout-align="center center">
+    <span class="gate-badge" ng-if="gatePlaced">LIGNE</span>
+    <span class="auto-badge" ng-if="autoMode">AUTO</span>
+    <span class="run-dot" ng-class="{'run-dot--running': isRunning, 'run-dot--paused': !isRunning}" title="{{isRunning ? 'En cours' : 'En pause'}}"></span>
+  </div>
+
+  <!-- Double-clic sur le timer = reset chrono + distance -->
+  <span id="timer" ng-bind="displayTime" ng-dblclick="resetTimer()" title="Double-clic pour reinitialiser"></span>
+
+  <!-- Distance cumulee (km) -->
+  <span id="distance" ng-bind="displayDistance + ' km'"></span>
+
+  <div class="button-container" layout="row" layout-align="center center">
+    <button ng-click="startTimer()" ng-disabled="autoMode" ng-class="{'btn-disabled': autoMode}" title="Desactive en mode auto (demarrage automatique)" style="margin-right: 10px;">Start</button>
+    <button ng-click="stopTimer()" style="margin-right: 10px;">Stop</button>
+    <button ng-click="resetTimer()" style="margin-right: 10px;">Reset</button>
+    <label class="auto-toggle">
+      <input type="checkbox" ng-model="autoMode" ng-change="onAutoModeChange()" />
+      Auto
+    </label>
+  </div>
+
+  <!-- Ligne de chronometrage (mode tour chronometre) -->
+  <div class="gate-container" layout="row" layout-align="center center">
+    <button ng-click="placeGate()" title="Place la ligne devant le vehicule" style="margin-right: 10px;">Placer ligne</button>
+    <button ng-click="removeGate()" ng-if="gatePlaced" title="Supprime la ligne" style="margin-right: 10px;">Supprimer</button>
+    <label class="auto-toggle" ng-if="gatePlaced">
+      <input type="checkbox" ng-model="gateEnabled" />
+      Ligne
+    </label>
+  </div>
+</div>

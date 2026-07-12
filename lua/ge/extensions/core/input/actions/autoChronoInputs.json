@@ -1,0 +1,11 @@
+// AutoChrono - raccourcis clavier
+// ctx non precise = 'vlua' par defaut => code execute directement dans le Lua
+// vehicule (lua/vehicle/extensions/autoChrono.lua). Fichier propre a ce mod.
+{
+"startAutoChrono"          :{"cat": "general", "order": 995, "onChange":"extensions.autoChrono.startTimer(VALUE)", "title": "AutoChrono : Start", "desc": "Demarre le chronometre AutoChrono" },
+"stopAutoChrono"           :{"cat": "general", "order": 996, "onChange":"extensions.autoChrono.stopTimer(VALUE)", "title": "AutoChrono : Pause", "desc": "Met en pause le chronometre AutoChrono" },
+"resetAutoChrono"          :{"cat": "general", "order": 997, "onChange":"extensions.autoChrono.resetTimer(VALUE)", "title": "AutoChrono : Reset", "desc": "Reinitialise le chronometre et la distance AutoChrono" },
+"toggleAutoModeAutoChrono" :{"cat": "general", "order": 998, "onChange":"extensions.autoChrono.toggleAuto(VALUE)", "title": "AutoChrono : Mode auto", "desc": "Active ou desactive le pilotage automatique du chronometre" },
+"placeAutoChronoGate"      :{"cat": "general", "order": 999, "ctx": "tlua", "onDown":"extensions.autoChronoGate.placeGate()", "title": "AutoChrono : Placer ligne", "desc": "Place la ligne de chronometrage devant le vehicule" },
+"removeAutoChronoGate"     :{"cat": "general", "order": 1000, "ctx": "tlua", "onDown":"extensions.autoChronoGate.removeGate()", "title": "AutoChrono : Supprimer ligne", "desc": "Supprime la ligne de chronometrage" },
+}

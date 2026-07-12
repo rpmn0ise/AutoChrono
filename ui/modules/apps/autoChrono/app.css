@@ -1,0 +1,146 @@
+/* AutoChrono - style */
+/* Auteur : rpmn0ise */
+
+@font-face {
+    font-family: Squada One;
+    src: url(/ui/common/SquadaOne-Regular.ttf) format(truetype);
+}
+
+.bngApp {
+    position: relative;
+}
+
+#timer {
+    color: white;
+    font-family: Squada One;
+    font-size: 1.9em;
+    margin-top: 16px;
+    cursor: pointer;
+}
+
+/* --- Distance cumulee --- */
+#distance {
+    color: rgba(255, 255, 255, 0.75);
+    font-family: Squada One;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+    margin-top: -2px;
+}
+
+/* --- Boutons manuels : toujours visibles (plus besoin de survol) --- */
+.button-container {
+    opacity: 1;
+    height: auto;
+    margin-top: 8px;
+}
+
+.button-container button {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 3px 6px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.button-container button:hover {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+/* boutons Start/Stop desactives visuellement quand le mode auto est actif */
+.button-container button.btn-disabled,
+.button-container button[disabled] {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.button-container button.btn-disabled:hover,
+.button-container button[disabled]:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* --- Case a cocher "Auto" --- */
+.auto-toggle {
+    color: white;
+    font-size: 0.75em;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    user-select: none;
+    margin-left: 4px;
+}
+
+.auto-toggle input[type="checkbox"] {
+    cursor: pointer;
+    margin: 0;
+}
+
+/* --- Indicateur mode auto + etat du chrono --- */
+.status-indicator {
+    position: absolute;
+    top: 2px;
+    right: 6px;
+    gap: 4px;
+}
+
+.auto-badge {
+    background-color: rgba(41, 128, 185, 0.85); /* bleu = mode auto actif */
+    color: white;
+    font-size: 0.55em;
+    font-family: Squada One;
+    padding: 1px 4px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+}
+
+.gate-badge {
+    background-color: rgba(155, 89, 182, 0.85); /* violet = ligne placee */
+    color: white;
+    font-size: 0.55em;
+    font-family: Squada One;
+    padding: 1px 4px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+}
+
+/* --- Bloc de controle de la ligne de chronometrage --- */
+.gate-container {
+    opacity: 1;
+    height: auto;
+    margin-top: 4px;
+}
+
+.gate-container button {
+    background-color: rgba(155, 89, 182, 0.25);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 3px 6px;
+    cursor: pointer;
+    font-size: 0.75em;
+    transition: background-color 0.2s;
+}
+
+.gate-container button:hover {
+    background-color: rgba(155, 89, 182, 0.45);
+}
+
+.run-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(150, 150, 150, 0.8);
+}
+
+.run-dot--running {
+    background-color: rgba(46, 204, 113, 0.95); /* vert = chrono en cours */
+    box-shadow: 0 0 4px rgba(46, 204, 113, 0.9);
+}
+
+.run-dot--paused {
+    background-color: rgba(231, 76, 60, 0.85); /* rouge = en pause */
+}
