@@ -1,6 +1,6 @@
 # AutoChrono
 
-**[🇬🇧 Read this in English](README.en.md)**
+**[🇬🇧 Read this in English](README.md)**
 
 Chronomètre automatique pour BeamNG.drive : démarre tout seul dès que ton véhicule bouge, avec en plus une ligne de chronométrage virtuelle à placer où tu veux pour chronométrer un tour de circuit.
 
