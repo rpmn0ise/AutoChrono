@@ -2,7 +2,7 @@
 
 **[🇬🇧 Read this in English](README.md)**
 
-Chronomètre automatique pour BeamNG.drive : démarre tout seul dès que ton véhicule bouge, avec en plus deux façons de chronométrer des tours — une simple ligne de chronométrage à placer où tu veux, ou un tracé complet à plusieurs checkpoints (placé à la main ou enregistré automatiquement en roulant, puis exportable/importable sous forme de fichier) — avec suivi du meilleur/dernier tour dans les deux cas.
+Chronomètre automatique pour BeamNG.drive : démarre tout seul dès que ton véhicule bouge, avec en plus deux façons de chronométrer des tours — une simple ligne de chronométrage à placer où tu veux, ou un tracé complet à plusieurs checkpoints (placé à la main ou enregistré automatiquement en roulant, puis exportable/importable sous forme de fichier) — avec suivi du meilleur/dernier tour dans les deux cas. Le chrono se met automatiquement en pause avec le jeu (menu Échap, etc.) et reprend tout seul, et les panneaux Réglages/Tracé s'ouvrent désormais en flottant par-dessus l'application au lieu de l'agrandir.
 
 ## Fonctionnalités
 
@@ -27,9 +27,11 @@ Chronomètre automatique pour BeamNG.drive : démarre tout seul dès que ton vé
 
 ### Commun
 - **Meilleur tour / dernier tour** affichés en direct sous le chrono, dans les deux modes de chronométrage.
+- **Pause automatique liée au jeu** : le chrono se met en pause automatiquement quand le jeu lui-même est mis en pause (menu Échap, etc.) et reprend tout seul quand le jeu reprend — mais seulement s'il tournait déjà avant la pause. Un badge dédié **"PAUSE JEU"** (ambre) rend ça clairement distinguable d'un Stop manuel.
+- **Panneaux flottants** : les panneaux Réglages (⚙️) et Tracé (🏁) s'ouvrent en survol par-dessus le reste de l'UI au lieu d'agrandir l'application. Un seul panneau est ouvert à la fois — en ouvrir un ferme l'autre. Ferme le panneau ouvert en recliquant sur son icône, en cliquant en dehors, ou avec la touche Échap. L'application garde en permanence sa taille compacte, qu'un panneau soit ouvert ou non.
 - **Panneau de réglages** (icône ⚙️) : ajuste le seuil de vitesse du démarrage auto, la largeur de la ligne, la distance de placement, et le délai anti-rebond, directement depuis l'UI.
 - **Raccourcis clavier optionnels** (Start / Stop / Reset / Toggle mode auto / Placer ligne / Supprimer ligne), à assigner dans Options > Contrôles > Général.
-- **Indicateurs visuels** : badge "AUTO" (bleu), badge "LIGNE" (violet) quand une ligne est placée, badge "TRACÉ" (orange) quand un tracé est prêt, et point vert/rouge pour l'état du chrono.
+- **Indicateurs visuels** : badge "AUTO" (bleu), badge "LIGNE" (violet) quand une ligne est placée, badge "TRACÉ" (orange) quand un tracé est prêt, badge "PAUSE JEU" (ambre) tant que le jeu est en pause, et point vert/rouge pour l'état du chrono.
 
 ## Installation
 
@@ -45,6 +47,16 @@ Chronomètre automatique pour BeamNG.drive : démarre tout seul dès que ton vé
 - Double-clique sur l'affichage du chrono pour tout remettre à zéro (chrono, distance, meilleur/dernier tour).
 - Clique sur **"Placer ligne"** pour poser une ligne de chronométrage devant ton véhicule. Repars et reviens la franchir : le premier passage démarre le chrono, chaque passage suivant boucle un tour et enchaîne directement sur le suivant.
 - Coche/décoche **"Ligne"** pour activer/désactiver le chronométrage par ligne sans la supprimer.
+
+### Pause jeu
+- Mets le jeu en pause (menu Échap, etc.) et le chrono se met en pause en même temps — un badge ambre **"PAUSE JEU"** apparaît pour indiquer que c'est le jeu qui a arrêté le chrono, pas un Stop manuel.
+- Reprends le jeu et le chrono repart tout seul — mais seulement s'il tournait vraiment avant la pause. Si tu l'avais déjà arrêté toi-même, il reste arrêté.
+- Toute action manuelle (Start, Stop ou Reset) est toujours prioritaire : elle annule immédiatement toute reprise automatique en attente suite à une pause jeu.
+
+### Panneaux (Réglages / Tracé)
+- Clique sur l'icône **⚙️** ou **🏁** pour ouvrir son panneau en flottant par-dessus l'application — l'application elle-même ne change jamais de taille.
+- Un seul panneau est affiché à la fois : en ouvrir un ferme automatiquement l'autre.
+- Ferme le panneau ouvert en recliquant sur son icône, en cliquant n'importe où en dehors du panneau, ou avec la touche **Échap**.
 
 ### Mode Tracé
 - Ouvre le panneau Tracé et place des checkpoints à la main en roulant, ou lance l'enregistrement automatique — un checkpoint est ajouté environ tous les 15 m.
@@ -81,6 +93,7 @@ Il n'y a pour l'instant pas de raccourcis dédiés au mode Tracé (enregistremen
 - **Mode Tracé** : une seconde extension moteur (`lua/ge/extensions/autoChronoTrack.lua`) gère la liste des checkpoints, l'enregistrement, ainsi que l'export/import JSON (fichiers écrits dans `mods/autochrono_tracks/`), et partage la même ligne physique que l'extension de chronométrage pour le départ/arrivée. Le tracé est rendu via `core_groundMarkers` (natif au jeu), avec un rendu de secours plus simple si cette API n'est pas disponible.
 - **Calage au sol** : la hauteur de la ligne est fixée via un raycast vers le bas (`castRayStatic`) au moment du placement, pour qu'elle reste plaquée au sol sur une route en pente au lieu de flotter.
 - **Réglages** : la largeur de ligne, la distance de placement et le cooldown sont envoyés de l'UI vers l'extension moteur via `extensions.autoChronoGate.setSettings(width, offset, cooldown)`.
+- **Détection de la pause jeu** : il n'existe pas d'API GE Lua officielle documentée et confirmée pour détecter fiablement que le jeu est en pause, donc `autoChronoGate.lua` utilise une heuristique à la place — en pause, le pas de temps simulé (`dtSim`) se fige généralement près de zéro alors que le pas de temps réel (`dtReal`) continue d'avancer. Plusieurs frames consécutives doivent respecter ce schéma avant que la pause (ou la reprise) soit confirmée, pour éviter un faux positif sur un simple lag ponctuel, et l'UI n'est notifiée que quand l'état change vraiment.
 
 ## Structure du projet
 
