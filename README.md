@@ -2,7 +2,7 @@
 
 **[🇫🇷 Lire en français](README.fr.md)**
 
-An automatic stopwatch for BeamNG.drive: starts on its own the moment your vehicle moves, plus two ways to time laps — a simple timing gate you can drop anywhere, or a full multi-checkpoint track (placed by hand or recorded automatically as you drive, then exported/imported as a file) — with best/last lap tracking either way.
+An automatic stopwatch for BeamNG.drive: starts on its own the moment your vehicle moves, plus two ways to time laps — a simple timing gate you can drop anywhere, or a full multi-checkpoint track (placed by hand or recorded automatically as you drive, then exported/imported as a file) — with best/last lap tracking either way. The timer automatically pauses with the game (Esc menu, etc.) and resumes on its own, and the Settings/Track panels now float above the app instead of resizing it.
 
 ## Features
 
@@ -27,9 +27,11 @@ An automatic stopwatch for BeamNG.drive: starts on its own the moment your vehic
 
 ### Common
 - **Best lap / last lap** displayed live under the timer, for both timing modes.
+- **Auto-pause with the game**: the timer automatically pauses when the game itself is paused (Esc menu, etc.) and resumes on its own when the game resumes — but only if it was already running before the pause. A dedicated **"PAUSE JEU"** badge (amber) makes this clearly distinguishable from a manual Stop.
+- **Floating panels**: the Settings (⚙️) and Track (🏁) panels open as floating overlays above the rest of the UI instead of pushing the app taller. Only one panel is open at a time — opening one closes the other. Close a panel by clicking its icon again, clicking outside it, or pressing Escape. The app keeps its compact size at all times, whether a panel is open or not.
 - **Settings panel** (⚙️ icon): adjust the auto-start speed threshold, gate width, gate placement distance, and the anti-bounce cooldown, all from the UI.
 - **Optional keybinds** (Start / Stop / Reset / Toggle auto mode / Place gate / Remove gate), bindable in Options > Controls > General.
-- **Visual status indicators**: "AUTO" badge (blue), "GATE" badge (purple) once a gate is placed, "TRACK" badge (orange) once a track is ready, and a green/red dot for timer state.
+- **Visual status indicators**: "AUTO" badge (blue), "GATE" badge (purple) once a gate is placed, "TRACK" badge (orange) once a track is ready, "PAUSE JEU" badge (amber) while the game is paused, and a green/red dot for timer state.
 
 ## Installation
 
@@ -45,6 +47,16 @@ An automatic stopwatch for BeamNG.drive: starts on its own the moment your vehic
 - Double-click the timer display to reset everything to zero (timer, distance, best/last lap).
 - Click **"Placer ligne"** (Place gate) to drop a timing gate in front of your vehicle. Drive off and cross it again: the first crossing starts the timer, every crossing after that closes a lap and starts the next one automatically.
 - Check/uncheck **"Ligne"** (Gate) to enable/disable gate-based timing without removing it.
+
+### Game pause
+- Pause the game (Esc menu, etc.) and the timer pauses right along with it — an amber **"PAUSE JEU"** badge appears so you know it's the game that stopped the clock, not a manual Stop.
+- Resume the game and the timer picks back up automatically — but only if it was actually running before you paused. If you had already stopped it yourself, it stays stopped.
+- Any manual action (Start, Stop, or Reset) always takes priority: it immediately cancels any pending auto-resume from a game pause.
+
+### Panels (Settings / Track)
+- Click the **⚙️** or **🏁** icon to open its panel as a floating overlay above the app — the app itself never changes size.
+- Only one panel is shown at a time: opening one automatically closes the other.
+- Close the open panel by clicking its icon again, clicking anywhere outside the panel, or pressing **Escape**.
 
 ### Track mode
 - Open the track panel and either place checkpoints manually as you drive, or start automatic recording — a checkpoint is added roughly every 15 m.
@@ -81,6 +93,7 @@ There are currently no dedicated keybinds for Track mode (recording, placing che
 - **Track mode**: a second engine-side extension (`lua/ge/extensions/autoChronoTrack.lua`) manages the list of checkpoints, recording, and JSON export/import (files are written to `mods/autochrono_tracks/`), and shares the same physical gate as the timing-gate extension for the start/finish line. Course markers are rendered through the game's native `core_groundMarkers`, with a simpler debug-draw fallback if that API isn't available.
 - **Ground snapping**: the gate's height is set with a downward raycast (`castRayStatic`) at placement time, so it sits flush on sloped roads instead of floating.
 - **Settings**: gate width, placement distance, and cooldown are pushed from the UI to the engine extension via `extensions.autoChronoGate.setSettings(width, offset, cooldown)`.
+- **Game-pause detection**: there is no confirmed, officially documented GE-Lua API to reliably detect that the game is paused, so `autoChronoGate.lua` uses a heuristic instead — while paused, the simulated time step (`dtSim`) typically freezes near zero while the real time step (`dtReal`) keeps advancing. Several consecutive frames must match this pattern before the pause (or the resume) is confirmed, to avoid false positives from an ordinary lag spike, and the UI is only notified when the state actually changes.
 
 ## Project structure
 
